@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
 using SS_API.Data;
+using SS_API.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace SS_API
@@ -47,6 +48,18 @@ namespace SS_API
                 x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
             );
             services.AddMvc();
+            // Configurando a injeção de dependência do service
+            services.AddTransient<IProjectService, ProjectService>();
+
+            // Adicionando políticas CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials());
+            });
 
             // Configurando o serviço de documentação do Swagger
             services.AddSwaggerGen(c =>
@@ -89,7 +102,12 @@ namespace SS_API
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc();
+            app.UseMvc( routes =>
+                {
+                    routes.MapRoute("default","{controller=Project}/{action=GetAll}");
+                });   
+            
+            app.UseCors("CorsPolicy");
 
             // Ativando middlewares para uso do Swagger
             app.UseSwagger();

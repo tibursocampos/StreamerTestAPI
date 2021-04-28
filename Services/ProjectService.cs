@@ -1,7 +1,10 @@
-﻿using SS_API.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SS_API.Data;
 using SS_API.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SS_API.Services
 {
@@ -10,6 +13,11 @@ namespace SS_API.Services
     /// </summary>
     public interface IProjectService
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Project>> GetAll();
         /// <summary>
         /// 
         /// </summary>
@@ -27,7 +35,7 @@ namespace SS_API.Services
         /// </summary>
         /// <param name="project"></param>
         /// <returns></returns>
-        bool Update(Project project);
+        void Update(Project project);
         /// <summary>
         /// 
         /// </summary>
@@ -40,6 +48,12 @@ namespace SS_API.Services
         /// <param name="project"></param>
         /// <returns></returns>
         int Create(Project project);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        bool ProjectExists(int id);
     }
     /// <summary>
     /// 
@@ -55,8 +69,8 @@ namespace SS_API.Services
         public ProjectService(StreamerContext context)
         {
             db = context;
-        }
-        
+        }     
+
         /// <summary>
         /// 
         /// </summary>
@@ -64,7 +78,9 @@ namespace SS_API.Services
         /// <returns></returns>
         public int Create(Project project)
         {
-            throw new NotImplementedException();
+            db.Projects.Add(project);
+            db.SaveChanges();
+            return project.Id;
         }
 
         /// <summary>
@@ -74,7 +90,27 @@ namespace SS_API.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            var exist = ProjectExists(id);
+            if (!exist)
+            {
+                return exist;
+            }
+            else
+            {
+                var project = db.Projects.Find(id);
+                db.Projects.Remove(project);
+
+                return exist;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Project>> GetAll()
+        {
+            return await db.Projects.OrderBy(p => p.Name).ToListAsync();
         }
 
         /// <summary>
@@ -84,7 +120,7 @@ namespace SS_API.Services
         /// <returns></returns>
         public List<Project> GetByCourse(int id)
         {
-            throw new NotImplementedException();
+            return db.Projects.Where(p => p.CourseId == id).OrderBy(p => p.Name).ToList();
         }
 
         /// <summary>
@@ -94,7 +130,9 @@ namespace SS_API.Services
         /// <returns></returns>
         public Project GetById(int id)
         {
-            throw new NotImplementedException();
+            var project = db.Projects.Find(id);
+            return project;
+
         }
 
         /// <summary>
@@ -102,9 +140,21 @@ namespace SS_API.Services
         /// </summary>
         /// <param name="project"></param>
         /// <returns></returns>
-        public bool Update(Project project)
+        public void Update(Project project)
         {
-            throw new NotImplementedException();
+            db.Entry(project).State = EntityState.Modified;
+            db.SaveChanges();
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool ProjectExists(int id)
+        {
+            return db.Projects.Any(p => p.Id == id);
         }
     }
 }

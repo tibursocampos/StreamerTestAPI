@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SS_API.Model;
 using SS_API.Services;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SS_API.Controllers
@@ -15,14 +16,17 @@ namespace SS_API.Controllers
     public class ProjectController : ControllerBase
     {
         private IProjectService projectService;
+        private ICourseService courseService;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="projectService"></param>
-        public ProjectController(IProjectService projectService)
+        /// <param name="courseService"></param>
+        public ProjectController(IProjectService projectService, ICourseService courseService)
         {
             this.projectService = projectService;
+            this.courseService = courseService;
         }
 
         /// <summary>
@@ -30,7 +34,7 @@ namespace SS_API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public Task<List<Project>> GetAll()
+        public List<Project> GetAll()
         {
             return projectService.GetAll();
         }
@@ -46,7 +50,7 @@ namespace SS_API.Controllers
             var project = projectService.GetById(id);
             if (project == null)
             {
-                return NotFound();
+                return NotFound(new { message = "Projeto não encontrado !!!"});
             }
             return project;
         }
@@ -56,10 +60,17 @@ namespace SS_API.Controllers
         /// </summary>
         /// <param name="courseId"></param>
         /// <returns></returns>
-        [HttpGet("courses/{courseId}")]
-        public List<Project> GetByCourse(int courseId)
+        [HttpGet("course/{courseId}")]
+        public ActionResult<List<Project>> GetByCourse(int courseId)
         {
-            return projectService.GetByCourse(courseId);
+            if (!courseService.CourseExists(courseId))
+            {
+                return NotFound(new { message = "Curso não encontrado !!!" });
+            }
+            else
+            {
+                return projectService.GetByCourse(courseId);
+            }
         }
 
         /// <summary>
@@ -68,31 +79,10 @@ namespace SS_API.Controllers
         /// <param name="id"></param>
         /// <param name="project"></param>
         /// <returns></returns>
-        [HttpPut("{id}")]
-        public bool Update(int id, Project project)
+        [HttpPut]
+        public bool Update(Project project)
         {
-            if (id != project.Id)
-            {
-                return false;
-            }
-
-            try
-            {
-                projectService.Update(project);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!projectService.ProjectExists(id))
-                {
-                    return false;
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return true;
+            return projectService.Update(project);
         }
 
         /// <summary>
@@ -115,7 +105,15 @@ namespace SS_API.Controllers
         public ActionResult<Project> Create(Project project)
         {
             var projectCreate = projectService.Create(project);
-            return CreatedAtAction("GetById",new { id = projectCreate });
+
+            if(projectCreate == -1)
+            {
+                return BadRequest(new { message = "Valor ProjectStatus inválido."});
+            }
+            else
+            {
+                return CreatedAtAction("GetById", new { id = projectCreate });
+            }            
         }
     }
 }

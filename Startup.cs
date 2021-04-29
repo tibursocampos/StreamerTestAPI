@@ -50,6 +50,7 @@ namespace SS_API
             services.AddMvc();
             // Configurando a injeção de dependência do service
             services.AddTransient<IProjectService, ProjectService>();
+            services.AddTransient<ICourseService, CourseService>();
 
             // Adicionando políticas CORS
             services.AddCors(options =>

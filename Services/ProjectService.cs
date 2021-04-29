@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SS_API.Data;
 using SS_API.Model;
 using System;
@@ -17,7 +18,7 @@ namespace SS_API.Services
         /// 
         /// </summary>
         /// <returns></returns>
-        Task<List<Project>> GetAll();
+        List<Project> GetAll();
         /// <summary>
         /// 
         /// </summary>
@@ -35,7 +36,7 @@ namespace SS_API.Services
         /// </summary>
         /// <param name="project"></param>
         /// <returns></returns>
-        void Update(Project project);
+        bool Update(Project project);
         /// <summary>
         /// 
         /// </summary>
@@ -78,6 +79,15 @@ namespace SS_API.Services
         /// <returns></returns>
         public int Create(Project project)
         {
+            if(project.ProjectStatus.HasValue)
+            {
+                var value = Convert.ToInt32(project.ProjectStatus);
+                if(value > 1 || value < 0)
+                {
+                    return -1;
+                }
+            }
+
             db.Projects.Add(project);
             db.SaveChanges();
             return project.Id;
@@ -108,9 +118,9 @@ namespace SS_API.Services
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Project>> GetAll()
+        public List<Project> GetAll()
         {
-            return await db.Projects.OrderBy(p => p.Name).ToListAsync();
+            return db.Projects.OrderBy(p => p.Name).ToList();
         }
 
         /// <summary>
@@ -120,7 +130,7 @@ namespace SS_API.Services
         /// <returns></returns>
         public List<Project> GetByCourse(int id)
         {
-            return db.Projects.Where(p => p.CourseId == id).OrderBy(p => p.Name).ToList();
+            return db.Projects.Where(p => p.CourseId == id).ToList();
         }
 
         /// <summary>
@@ -140,11 +150,32 @@ namespace SS_API.Services
         /// </summary>
         /// <param name="project"></param>
         /// <returns></returns>
-        public void Update(Project project)
+        public bool Update(Project project)
         {
-            db.Entry(project).State = EntityState.Modified;
-            db.SaveChanges();
+            //var projectId = db.Projects.Find(project.Id);
+            //if (projectId is null)
+            //{
+            //    return false;
+            //}
 
+            try
+            {
+                db.Entry(project).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProjectExists(project.Id))
+                {
+                    return false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>

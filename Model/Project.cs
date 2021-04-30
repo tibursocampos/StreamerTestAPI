@@ -25,8 +25,9 @@ namespace SS_API.Model
         /// <param name="what"></param>
         /// <param name="whatWillWeDo"></param>
         /// <param name="projectStatus"></param>
+        /// <param name="course"></param>
         /// <param name="courseId"></param>
-        public Project(int id, string name, string image, string why, string what, string whatWillWeDo, ProjectStatusEnum projectStatus, int courseId)
+        public Project(int id, string name, string image, string why, string what, string whatWillWeDo, ProjectStatusEnum projectStatus, Course course, int courseId)
         {
             Id = id;
             Name = name;
@@ -35,6 +36,7 @@ namespace SS_API.Model
             What = what;
             WhatWillWeDo = whatWillWeDo;
             ProjectStatus = projectStatus;
+            Course = course;
             CourseId = courseId;
         }
 
@@ -47,8 +49,9 @@ namespace SS_API.Model
         /// <param name="what"></param>
         /// <param name="whatWillWeDo"></param>
         /// <param name="projectStatus"></param>
+        /// <param name="course"></param>
         /// <param name="courseId"></param>
-        public Project(string name, string image, string why, string what, string whatWillWeDo, ProjectStatusEnum projectStatus, int courseId)
+        public Project(string name, string image, string why, string what, string whatWillWeDo, ProjectStatusEnum projectStatus, Course course, int courseId)
         {
             Name = name;
             Image = image;
@@ -56,6 +59,7 @@ namespace SS_API.Model
             What = what;
             WhatWillWeDo = whatWillWeDo;
             ProjectStatus = projectStatus;
+            Course = course;
             CourseId = courseId;
         }
         /// <summary>
@@ -83,13 +87,13 @@ namespace SS_API.Model
         /// </summary>
         public string WhatWillWeDo { get; set; } = null;
         /// <summary>
-        /// Status
+        /// Status do projeto
         /// </summary>
         public ProjectStatusEnum? ProjectStatus { get; set; }
         /// <summary>
         /// Referência para qual Curso o projeto faz parte
         /// </summary>
-        public virtual Course Course { get; set; }
+        public Course Course { get; set; }
         /// <summary>
         /// Foreign Key para o Curso
         /// </summary>

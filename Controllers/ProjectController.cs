@@ -96,8 +96,7 @@ namespace SS_API.Controllers
             return projectService.Delete(id);
         }
 
-        /// <summary>
-        /// 
+        /// <summary> 
         /// </summary>
         /// <param name="project"></param>
         /// <returns></returns>

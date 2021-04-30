@@ -8,8 +8,8 @@ using SS_API.Data;
 namespace SS_API.Migrations
 {
     [DbContext(typeof(StreamerContext))]
-    [Migration("20210427231543_initial-config")]
-    partial class initialconfig
+    [Migration("20210430012603_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,7 +26,29 @@ namespace SS_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Course");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Angular"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "React"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "DotNet"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Java"
+                        });
                 });
 
             modelBuilder.Entity("SS_API.Model.Project", b =>
@@ -53,7 +75,7 @@ namespace SS_API.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Project");
                 });
 
             modelBuilder.Entity("SS_API.Model.Project", b =>

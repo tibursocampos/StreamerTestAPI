@@ -24,7 +24,29 @@ namespace SS_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Course");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Angular"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "React"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "DotNet"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Java"
+                        });
                 });
 
             modelBuilder.Entity("SS_API.Model.Project", b =>
@@ -51,7 +73,7 @@ namespace SS_API.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Project");
                 });
 
             modelBuilder.Entity("SS_API.Model.Project", b =>

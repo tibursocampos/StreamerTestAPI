@@ -1,16 +1,21 @@
-﻿using SS_API.Model.Enum;
+﻿using SS_API.Model;
+using SS_API.Model.Enum;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace SS_API.Model
+namespace SS_API.Services.Dto
 {
     /// <summary>
-    /// Classe Project
+    /// 
     /// </summary>
-    public class Project
+    public class ProjectDto
     {
         /// <summary>
         /// 
         /// </summary>
-        public Project()
+        public ProjectDto()
         {
 
         }
@@ -25,9 +30,8 @@ namespace SS_API.Model
         /// <param name="what"></param>
         /// <param name="whatWillWeDo"></param>
         /// <param name="projectStatus"></param>
-        /// <param name="course"></param>
         /// <param name="courseId"></param>
-        public Project(int id, string name, string image, string why, string what, string whatWillWeDo, ProjectStatusEnum projectStatus, Course course, int courseId)
+        public ProjectDto(int id, string name, string image, string why, string what, string whatWillWeDo, ProjectStatusEnum projectStatus, int courseId) 
         {
             Id = id;
             Name = name;
@@ -36,7 +40,6 @@ namespace SS_API.Model
             What = what;
             WhatWillWeDo = whatWillWeDo;
             ProjectStatus = projectStatus;
-            Course = course;
             CourseId = courseId;
         }
 
@@ -49,9 +52,8 @@ namespace SS_API.Model
         /// <param name="what"></param>
         /// <param name="whatWillWeDo"></param>
         /// <param name="projectStatus"></param>
-        /// <param name="course"></param>
         /// <param name="courseId"></param>
-        public Project(string name, string image, string why, string what, string whatWillWeDo, ProjectStatusEnum projectStatus, Course course, int courseId)
+        public ProjectDto(string name, string image, string why, string what, string whatWillWeDo, ProjectStatusEnum projectStatus, int courseId)
         {
             Name = name;
             Image = image;
@@ -59,9 +61,9 @@ namespace SS_API.Model
             What = what;
             WhatWillWeDo = whatWillWeDo;
             ProjectStatus = projectStatus;
-            Course = course;
             CourseId = courseId;
         }
+
         /// <summary>
         /// Id do projeto
         /// </summary>
@@ -87,13 +89,9 @@ namespace SS_API.Model
         /// </summary>
         public string WhatWillWeDo { get; set; } = null;
         /// <summary>
-        /// Status do projeto
+        /// Status
         /// </summary>
         public ProjectStatusEnum? ProjectStatus { get; set; }
-        /// <summary>
-        /// Referência para qual Curso o projeto faz parte
-        /// </summary>
-        public Course Course { get; set; }
         /// <summary>
         /// Foreign Key para o Curso
         /// </summary>

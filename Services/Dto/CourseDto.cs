@@ -1,16 +1,19 @@
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace SS_API.Model
+namespace SS_API.Services.Dto
 {
     /// <summary>
-    /// Classe Course
+    /// 
     /// </summary>
-    public class Course
+    public class CourseDto
     {
         /// <summary>
         /// 
         /// </summary>
-        public Course()
+        public CourseDto()
         {
 
         }
@@ -20,7 +23,7 @@ namespace SS_API.Model
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
-        public Course(int id, string name)
+        public CourseDto(int id, string name)
         {
             Id = id;
             Name = name;
@@ -30,7 +33,7 @@ namespace SS_API.Model
         /// 
         /// </summary>
         /// <param name="name"></param>
-        public Course(string name)
+        public CourseDto(string name)
         {
             Name = name;
         }
@@ -42,9 +45,5 @@ namespace SS_API.Model
         /// Nome do curso
         /// </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public virtual ICollection<Project> Projects { get; set; }
     }
 }

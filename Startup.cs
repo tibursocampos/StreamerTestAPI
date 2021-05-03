@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
 using SS_API.Data;
+using SS_API.Repositories;
 using SS_API.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -51,6 +52,8 @@ namespace SS_API
             // Configurando a injeção de dependência do service
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<ICourseService, CourseService>();
+            services.AddTransient<IProjectRepository, ProjectRepository>();
+            services.AddTransient<ICourseRepository, CourseRepository>();
 
             // Adicionando políticas CORS
             services.AddCors(options =>
@@ -65,26 +68,8 @@ namespace SS_API
             // Configurando o serviço de documentação do Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1",
-                    new OpenApiInfo
-                    {
-                        Title = "SS Test",
-                        Version = "v1",
-                        Description = "Streamer - Aplicação de teste",
-                        Contact = new OpenApiContact
-                        {
-                            Name = "João Paulo Mendonça"
-                        }
-                    });
-
-                string caminhoAplicacao =
-                    PlatformServices.Default.Application.ApplicationBasePath;
-                string nomeAplicacao =
-                    PlatformServices.Default.Application.ApplicationName;
-                string caminhoXmlDoc =
-                    Path.Combine(caminhoAplicacao, $"{nomeAplicacao}.xml");
-
-                c.IncludeXmlComments(caminhoXmlDoc);
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "e-Buffet API", Version = "v1" });
+               
             });
         }
 
@@ -100,6 +85,16 @@ namespace SS_API
             IHostingEnvironment env,
             ILoggerFactory loggerFactory)
         {
+            // Ativando middlewares para uso do Swagger
+            app.UseSwagger();
+            var swaggerUrl = "/swagger/v1/swagger.json";
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint(swaggerUrl, "STREAMER-TEST API");
+                c.RoutePrefix = string.Empty;
+            });
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -109,15 +104,7 @@ namespace SS_API
                 });   
             
             app.UseCors("CorsPolicy");
-
-            // Ativando middlewares para uso do Swagger
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                    "Streamer - Aplicação de teste");
-                c.RoutePrefix = string.Empty;
-            });
+            
         }
     }
 }

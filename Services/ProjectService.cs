@@ -1,114 +1,90 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SS_API.Data;
 using SS_API.Model;
+using SS_API.Model.Enum;
+using SS_API.Repositories;
+using SS_API.Services.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SS_API.Services
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface IProjectService
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        List<Project> GetAll();
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Project GetById(int id);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        List<Project> GetByCourse(int id);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="project"></param>
-        /// <returns></returns>
-        bool Update(Project project);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        bool Delete(int id);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="project"></param>
-        /// <returns></returns>
-        int Create(Project project);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        bool ProjectExists(int id);
-    }
-    /// <summary>
-    /// 
-    /// </summary>
     public class ProjectService : IProjectService
     {
-        private readonly StreamerContext db;
+        private readonly IProjectRepository repository;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="context"></param>
-        public ProjectService(StreamerContext context)
+        public ProjectService(IProjectRepository repository)
         {
-            db = context;
+            this.repository = repository;
         }     
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="project"></param>
+        /// <param name="projectDto"></param>
         /// <returns></returns>
-        public int Create(Project project)
+        public async Task<ResponseDto> Create(ProjectDto projectDto)
         {
-            if(project.ProjectStatus.HasValue)
+            if (!Enum.IsDefined(typeof(ProjectStatusEnum), projectDto.ProjectStatus))
             {
-                var value = Convert.ToInt32(project.ProjectStatus);
-                if(value > 1 || value < 0)
-                {
-                    return -1;
-                }
+                return new ResponseDto().BadRequest("Valor ProjectStatus inválido.");
+            }
+            var project = new Project(projectDto.Name, projectDto.Image, projectDto.Why, projectDto.What, projectDto.WhatWillWeDo, projectDto.ProjectStatus, projectDto.CourseId);
+
+            await repository.Create(project);
+            
+            return new ResponseDto().Created(project.Id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="projectDto"></param>
+        /// <returns></returns>
+        public ResponseDto Update(ProjectDto projectDto)
+        {
+            if (!Enum.IsDefined(typeof(ProjectStatusEnum), projectDto.ProjectStatus))
+            {
+                return new ResponseDto().BadRequest("Valor ProjectStatus inválido.");
+            }
+            var project = repository.Get().FirstOrDefault(x => x.Id == projectDto.Id);
+            if (project == null)
+            {
+                return new ResponseDto().NotFound("Projeto não encontrado");
             }
 
-            db.Projects.Add(project);
-            db.SaveChanges();
-            return project.Id;
+            project.Update(projectDto);
+            repository.Update(project);
+
+            return new ResponseDto().Executed();
         }
+
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool Delete(int id)
+        public ResponseDto Delete(int id)
         {
             var exist = ProjectExists(id);
             if (!exist)
             {
-                return exist;
+                return new ResponseDto().NotFound("Projeto não encontrado");
             }
             else
             {
-                var project = db.Projects.Find(id);
-                db.Projects.Remove(project);
+                repository.Delete(id);
 
-                return exist;
+                return new ResponseDto().Executed();
             }
         }
 
@@ -116,9 +92,17 @@ namespace SS_API.Services
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<Project> GetAll()
+        public List<ProjectDto> GetAll()
         {
-            return db.Projects.OrderBy(p => p.Name).ToList();
+            List<ProjectDto> projectList = new List<ProjectDto>();
+            var projects = repository.Get().Include(c => c.Course).OrderBy(p => p.Course.Name).ToList();
+
+            foreach(var project in projects)
+            {
+                projectList.Add(new ProjectDto(project));
+            }
+
+            return projectList;
         }
 
         /// <summary>
@@ -126,9 +110,17 @@ namespace SS_API.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<Project> GetByCourse(int id)
+        public List<ProjectDto> GetByCourse(int id)
         {
-            return db.Projects.Where(p => p.CourseId == id).ToList();
+            List<ProjectDto> projectList = new List<ProjectDto>();
+            var projects = repository.Get().Include(c => c.Course).Where(p => p.CourseId == id).ToList();
+
+            foreach (var project in projects)
+            {
+                projectList.Add(new ProjectDto(project));
+            }
+
+            return projectList;
         }
 
         /// <summary>
@@ -136,46 +128,16 @@ namespace SS_API.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Project GetById(int id)
+        public ProjectDto GetById(int id)
         {
-            var project = db.Projects.Find(id);
-            return project;
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="project"></param>
-        /// <returns></returns>
-        public bool Update(Project project)
-        {
-            //var projectId = db.Projects.Find(project.Id);
-            //if (projectId is null)
-            //{
-            //    return false;
-            //}
-
-            try
+            var project = repository.Get().Include(c => c.Course).FirstOrDefault(x => x.Id == id);
+            if(project == null)
             {
-                db.Entry(project).State = EntityState.Modified;
-                db.SaveChanges();
+                return null;
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProjectExists(project.Id))
-                {
-                    return false;
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return true;
+            return new ProjectDto(project);
         }
-
+       
         /// <summary>
         /// 
         /// </summary>
@@ -183,7 +145,8 @@ namespace SS_API.Services
         /// <returns></returns>
         public bool ProjectExists(int id)
         {
-            return db.Projects.Any(p => p.Id == id);
+            return repository.Get().Any(p => p.Id == id);
         }
+        
     }
 }

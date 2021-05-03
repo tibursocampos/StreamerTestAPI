@@ -14,10 +14,10 @@ namespace SS_API.Model.Enum
         /// <summary>
         /// 0 - Em desenvolvimento
         /// </summary>
-        [Description("Em desenvolvimento")] EmDesenvolvimento,
+        EmDesenvolvimento = 0,
         /// <summary>
         /// 1 - Publicado
         /// </summary>
-        [Description("Publicado")] Publicado
+        Publicado = 1
     }
 }

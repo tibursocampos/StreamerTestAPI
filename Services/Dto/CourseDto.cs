@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using SS_API.Model;
 
 namespace SS_API.Services.Dto
 {
@@ -13,30 +10,13 @@ namespace SS_API.Services.Dto
         /// <summary>
         /// 
         /// </summary>
-        public CourseDto()
+        public CourseDto(Course course)
         {
+            Id = course.Id;
+            Name = course.Name;
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        public CourseDto(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        public CourseDto(string name)
-        {
-            Name = name;
-        }
         /// <summary>
         /// Id do curso
         /// </summary>

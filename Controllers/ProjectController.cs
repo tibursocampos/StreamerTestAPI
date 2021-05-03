@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SS_API.Model;
 using SS_API.Services;
+using SS_API.Services.Dto;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SS_API.Controllers
@@ -16,7 +14,7 @@ namespace SS_API.Controllers
     public class ProjectController : ControllerBase
     {
         private IProjectService projectService;
-        private ICourseService courseService;
+        private readonly ICourseService courseService;
 
         /// <summary>
         /// 
@@ -34,9 +32,11 @@ namespace SS_API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public List<Project> GetAll()
+        public ActionResult<List<ProjectDto>> GetAll()
         {
-            return projectService.GetAll();
+            var project = projectService.GetAll();
+            return project;
+
         }
 
         /// <summary>
@@ -45,12 +45,12 @@ namespace SS_API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public ActionResult<Project> GetById(int id)
+        public ActionResult<ProjectDto> GetById(int id)
         {
             var project = projectService.GetById(id);
             if (project == null)
             {
-                return NotFound(new { message = "Projeto não encontrado !!!"});
+                return NotFound(new { message = "Projeto não encontrado !!!" });
             }
             return project;
         }
@@ -61,7 +61,7 @@ namespace SS_API.Controllers
         /// <param name="courseId"></param>
         /// <returns></returns>
         [HttpGet("course/{courseId}")]
-        public ActionResult<List<Project>> GetByCourse(int courseId)
+        public ActionResult<List<ProjectDto>> GetByCourse(int courseId)
         {
             if (!courseService.CourseExists(courseId))
             {
@@ -76,13 +76,19 @@ namespace SS_API.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="project"></param>
+        /// <param name="projectDto"></param>
         /// <returns></returns>
         [HttpPut]
-        public bool Update(Project project)
+        public ActionResult<bool> Update(ProjectDto projectDto)
         {
-            return projectService.Update(project);
+            var response = projectService.Update(projectDto);
+
+            if (!response.Success)
+            {
+                return NotFound(new { message = response.ErrorMessage });
+            }
+
+            return response.Success;
         }
 
         /// <summary>
@@ -91,27 +97,35 @@ namespace SS_API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public bool Delete(int id)
+        public ActionResult<bool> Delete(int id)
         {
-            return projectService.Delete(id);
+            var response = projectService.Delete(id);
+
+            if (!response.Success)
+            {
+                return BadRequest(new { message = response.ErrorMessage });
+            }
+
+            return response.Success;
         }
 
-        /// <summary> 
+        /// <summary>
+        /// 
         /// </summary>
-        /// <param name="project"></param>
+        /// <param name="projectDto"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult<Project> Create(Project project)
+        public async Task<ActionResult> Create(ProjectDto projectDto)
         {
-            var projectCreate = projectService.Create(project);
+            var projectCreate = await projectService.Create(projectDto);
 
-            if(projectCreate == -1)
+            if(!projectCreate.Success)
             {
-                return BadRequest(new { message = "Valor ProjectStatus inválido."});
+                return BadRequest(new { message = projectCreate.ErrorMessage});
             }
             else
             {
-                return CreatedAtAction("GetById", new { id = projectCreate });
+                return CreatedAtAction("Created", new { id = projectCreate.ProjectId });
             }            
         }
     }

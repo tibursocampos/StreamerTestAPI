@@ -7,10 +7,7 @@ namespace SS_API.Model
     /// </summary>
     public class Course
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public Course()
+        protected Course()
         {
 
         }
@@ -26,25 +23,18 @@ namespace SS_API.Model
             Name = name;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        public Course(string name)
-        {
-            Name = name;
-        }
+     
         /// <summary>
         /// Id do curso
         /// </summary>
-        public int Id { get; set; }
+        public int Id { get; private set; }
         /// <summary>
         /// Nome do curso
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; private set; }
         /// <summary>
         /// 
         /// </summary>
-        public virtual ICollection<Project> Projects { get; set; }
+        public ICollection<Project> Projects { get; set; }
     }
 }

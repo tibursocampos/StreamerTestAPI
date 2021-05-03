@@ -1,9 +1,5 @@
 ﻿using SS_API.Model;
 using SS_API.Model.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SS_API.Services.Dto
 {
@@ -12,9 +8,6 @@ namespace SS_API.Services.Dto
     /// </summary>
     public class ProjectDto
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public ProjectDto()
         {
 
@@ -23,45 +16,18 @@ namespace SS_API.Services.Dto
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="image"></param>
-        /// <param name="why"></param>
-        /// <param name="what"></param>
-        /// <param name="whatWillWeDo"></param>
-        /// <param name="projectStatus"></param>
-        /// <param name="courseId"></param>
-        public ProjectDto(int id, string name, string image, string why, string what, string whatWillWeDo, ProjectStatusEnum projectStatus, int courseId) 
+        public ProjectDto(Project project)
         {
-            Id = id;
-            Name = name;
-            Image = image;
-            Why = why;
-            What = what;
-            WhatWillWeDo = whatWillWeDo;
-            ProjectStatus = projectStatus;
-            CourseId = courseId;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="image"></param>
-        /// <param name="why"></param>
-        /// <param name="what"></param>
-        /// <param name="whatWillWeDo"></param>
-        /// <param name="projectStatus"></param>
-        /// <param name="courseId"></param>
-        public ProjectDto(string name, string image, string why, string what, string whatWillWeDo, ProjectStatusEnum projectStatus, int courseId)
-        {
-            Name = name;
-            Image = image;
-            Why = why;
-            What = what;
-            WhatWillWeDo = whatWillWeDo;
-            ProjectStatus = projectStatus;
-            CourseId = courseId;
+            if (project == null) return;
+            Id = project.Id;
+            Name = project.Name;
+            Image = project.Image;
+            Why = project.Why;
+            What = project.What;
+            WhatWillWeDo = project.WhatWillWeDo;
+            ProjectStatus = project.ProjectStatus;
+            CourseId = project.CourseId;
+            Course = new CourseDto(project.Course);
         }
 
         /// <summary>
@@ -75,26 +41,30 @@ namespace SS_API.Services.Dto
         /// <summary>
         /// Caminho da imagem no banco
         /// </summary>
-        public string Image { get; set; } = null;
+        public string Image { get; set; }
         /// <summary>
         /// Campos para descrição do projeto
         /// </summary>
-        public string Why { get; set; } = null;
+        public string Why { get; set; }
         /// <summary>
         /// Campos para descrição do projeto
         /// </summary>
-        public string What { get; set; } = null;
+        public string What { get; set; }
         /// <summary>
         /// Campos para descrição do projeto
         /// </summary>
-        public string WhatWillWeDo { get; set; } = null;
+        public string WhatWillWeDo { get; set; }
         /// <summary>
         /// Status
         /// </summary>
         public ProjectStatusEnum? ProjectStatus { get; set; }
         /// <summary>
         /// Foreign Key para o Curso
-        /// </summary>
+        /// </summary>        
         public int CourseId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public CourseDto Course { get; set; }
     }
 }

@@ -27,7 +27,18 @@ namespace SS_API.Services.Dto
         /// 
         /// </summary>
         /// <returns></returns>
-        public ResponseDto Valid()
+        public ResponseDto Created(int id)
+        {
+            Success = true;
+            ProjectId = id;
+            return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ResponseDto Executed()
         {
             Success = true;
             return this;
@@ -38,7 +49,19 @@ namespace SS_API.Services.Dto
         /// </summary>
         /// <param name="validationMessage"></param>
         /// <returns></returns>
-        public ResponseDto Invalid(string validationMessage)
+        public ResponseDto BadRequest(string validationMessage)
+        {
+            Success = false;
+            ErrorMessage = validationMessage;
+            return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="validationMessage"></param>
+        /// <returns></returns>
+        public ResponseDto NotFound(string validationMessage)
         {
             Success = false;
             ErrorMessage = validationMessage;

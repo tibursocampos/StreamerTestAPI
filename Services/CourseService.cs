@@ -1,42 +1,25 @@
-﻿using SS_API.Data;
-using SS_API.Model;
+﻿using SS_API.Model;
+using SS_API.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SS_API.Services
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface ICourseService
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        List<Course> GetAll();
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        bool CourseExists(int id);
-    }
 
     /// <summary>
     /// 
     /// </summary>
     public class CourseService : ICourseService
     {
-        private readonly StreamerContext db;
+        private readonly ICourseRepository context;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="context"></param>
-        public CourseService(StreamerContext context)
+        public CourseService(ICourseRepository context)
         {
-            db = context;
+            this.context = context;
         }
 
         /// <summary>
@@ -45,7 +28,7 @@ namespace SS_API.Services
         /// <returns></returns>
         public List<Course> GetAll()
         {
-            return db.Courses.ToList();
+            return context.Get().ToList();
         }
 
         /// <summary>
@@ -55,7 +38,7 @@ namespace SS_API.Services
         /// <returns></returns>
         public bool CourseExists(int id)
         {
-            return db.Courses.Any(p => p.Id == id);
+            return context.Get().Any(p => p.Id == id);
         }
     }
 }

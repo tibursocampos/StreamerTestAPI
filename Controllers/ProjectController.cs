@@ -14,7 +14,7 @@ namespace SS_API.Controllers
     public class ProjectController : ControllerBase
     {
         private IProjectService projectService;
-        private readonly ICourseService courseService;
+        private ICourseService courseService;
 
         /// <summary>
         /// 

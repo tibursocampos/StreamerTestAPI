@@ -8,7 +8,7 @@ using SS_API.Data;
 namespace SS_API.Migrations
 {
     [DbContext(typeof(StreamerContext))]
-    [Migration("20210430012603_initial")]
+    [Migration("20210503211813_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

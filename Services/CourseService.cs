@@ -36,7 +36,7 @@ namespace SS_API.Services
         public List<CourseDto> GetAll()
         {
             List<CourseDto> courseList = new List<CourseDto>();
-            var courses = repository.Get().ToList();
+            var courses = repository.Get().OrderBy(x => x.Name).ToList();
 
             foreach (var course in courses)
             {

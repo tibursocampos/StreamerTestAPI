@@ -1,5 +1,6 @@
 ﻿using SS_API.Model;
 using SS_API.Repositories;
+using SS_API.Services.Dto;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,24 +12,20 @@ namespace SS_API.Services
     /// </summary>
     public class CourseService : ICourseService
     {
-        private readonly ICourseRepository context;
+        private readonly ICourseRepository repository;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="context"></param>
-        public CourseService(ICourseRepository context)
+        /// <param name="repository"></param>
+        public CourseService(ICourseRepository repository)
         {
-            this.context = context;
+            this.repository = repository;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public List<Course> GetAll()
+        public bool CourseExists(int id)
         {
-            return context.Get().ToList();
+           return repository.Get().Any(x => x.Id == id);
         }
 
         /// <summary>
@@ -36,9 +33,27 @@ namespace SS_API.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool CourseExists(int id)
+        public List<CourseDto> GetAll()
         {
-            return context.Get().Any(p => p.Id == id);
+            List<CourseDto> courseList = new List<CourseDto>();
+            var courses = repository.Get().OrderBy(x => x.Name).ToList();
+
+            foreach (var course in courses)
+            {
+                courseList.Add(new CourseDto(course));
+            }
+
+            return courseList;
+        }
+
+        public CourseDto GetById(int id)
+        {
+            var course = repository.Get().FirstOrDefault(x => x.Id == id);
+            if (course == null)
+            {
+                return null;
+            }
+            return new CourseDto(course);
         }
     }
 }

@@ -62,13 +62,14 @@ namespace SS_API
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .SetIsOriginAllowed(origin => true)
+                .AllowAnyOrigin()
                 .AllowCredentials());
             });
 
             // Configurando o serviço de documentação do Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "e-Buffet API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "STREAMER-TEST API", Version = "v1" });
                
             });
         }
@@ -98,11 +99,11 @@ namespace SS_API
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc( routes =>
-                {
-                    routes.MapRoute("default","{controller=Project}/{action=GetAll}");
-                });   
-            
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=Project}/{action=GetAll}");
+            });
+
             app.UseCors("CorsPolicy");
             
         }

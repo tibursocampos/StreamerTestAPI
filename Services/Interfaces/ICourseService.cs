@@ -1,4 +1,4 @@
-﻿using SS_API.Model;
+﻿using SS_API.Services.Dto;
 using System.Collections.Generic;
 
 namespace SS_API.Services
@@ -12,12 +12,13 @@ namespace SS_API.Services
         /// 
         /// </summary>
         /// <returns></returns>
-        List<Course> GetAll();
+        List<CourseDto> GetAll();
         /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         bool CourseExists(int id);
+        CourseDto GetById(int id);
     }
 }

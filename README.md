@@ -11,6 +11,7 @@ Para iniciar a aplicação utilize `SS_API` conforme imagem abaixo.
 
 ![server](https://user-images.githubusercontent.com/37385246/117552329-0806ba00-b021-11eb-8d5f-734a6334f10a.png)
 
+****
 ## ESTRUTURA DO PROJETO
 
 ### Pastas
@@ -28,6 +29,7 @@ Conforme solicitado, a estrutura de pastas foi mantida
 **./SS_DB.db** 
 - Sqlite DB.
 
+****
 ### Pastas criadas
 No entanto para melhor organização, e de acordo com proposto na descrição do teste, foram criadas algumas pastas e subpastas no projeto.
 
@@ -49,6 +51,7 @@ No entanto para melhor organização, e de acordo com proposto na descrição do
 **./Services/Interfaces**
 - Interfaces dos métodos da camada de serviço.
 
+****
 ## IMAGENS DO PROJETO
 
 ![image](https://user-images.githubusercontent.com/37385246/117550040-5cf00380-b014-11eb-9983-30bbaab85a10.png)

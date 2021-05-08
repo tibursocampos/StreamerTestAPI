@@ -7,13 +7,16 @@ namespace SS_API.Model
     /// </summary>
     public class Course
     {
+        /// <summary>
+        /// Construtor para uso do EF Core
+        /// </summary>
         protected Course()
         {
 
         }
 
         /// <summary>
-        /// 
+        /// Construtor para instância de novo objeto
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
@@ -33,7 +36,7 @@ namespace SS_API.Model
         /// </summary>
         public string Name { get; private set; }
         /// <summary>
-        /// 
+        /// Coleção de objetos Project
         /// </summary>
         public ICollection<Project> Projects { get; set; }
     }

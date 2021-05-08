@@ -1,93 +1,54 @@
-# STREAMER-TEST API
+# BACK-END STREAMER TEST
 
-Essa aplicação foi criada com o intuito de testar os conhecimentos básicos de um desenvolvedor **.net core**.
+Este é o desenvolvimento da API solicitada no teste [STREAMER TEST](https://github.com/jpmendonca/streamertest).
+Este projeto foi executado utilizando a estrutura e versões de ferramentas conforme solicitado.
 
-Trata-se de uma API Rest, com acesso a um banco de dados SQL contendo apenas uma entidade 'Courses'.
+Após baixar / clonar o repositório, execute o arquivo `SS-API.sln` para abertura do projeto.
 
-## ESTRUTURA BÁSICA
-               
-**./Data**  
-Contexto do banco de dados                  
+Para iniciar a aplicação utilize `SS_API` conforme imagem abaixo.
+![server](https://user-images.githubusercontent.com/37385246/117552329-0806ba00-b021-11eb-8d5f-734a6334f10a.png)
 
-**./Model**  
+No Package Manager Console, ou CLI, para criar uma nova _migration_ execute o comando `add-migration _nome_da_migration` e posteriormente execute `update-database` para atualizar o banco de dados e executar as configurações da _migration_.
+
+## ESTRUTURA DO PROJETO
+### Pastas
+Conforme solicitado, a estrutura de pastas foi mantida
+
+**./Data**
+Contexto do banco de dados
+
+**./Model**
 Modelagem do banco de dados
 
-**./Services**  
+**./Services**
 Classes de serviços de acesso ao banco de dados
 
-**./SS_DB.db**  
-Sqlite DB
+**./SS_DB.db**
+Sqlite DB.
 
-**ATENÇÃO: é importante manter a estrutura do projeto como está. A intenção do teste é puramente analisar o modo em que você escreve o seu código e se organiza dentro dessa estrutura. Caso ache necessário, fique à vontade para criar novas pastas.**
+### Pastas criadas
+No entanto para melhor organização, e de acordo com proposto na descrição do teste, foram criadas algumas pastas e subpastas no projeto.
 
-## O que fazer?
-Desenvolver um CRUD da entidade 'Project'.
+**./Controllers**
+Classes para expor os recursos para os usuários finais através de requisições Http.
 
-Fique a vontade para programar como você costuma programar. Será analisada a organização, criatividade e boas práticas do código. Como trata-se apenas de um teste, qualquer dúvida que surgir no meio do caminho, resolva como você achar que é mais coerente.
+**./Repositories**
+Camada para acesso ao contexto, desacoplando este acesso da camada de serviço.
 
-### Model
-Criar a seguinte tabela, através do Code-First do Entity Framework Core.
+**./Data/Mappings**
+Classes de mapeamento das entidades do dbContext.
 
-Realizar as atualizações no banco de dados através das Migrations do EF Core
+**./Model/Enum**
+Organização das classes da model e _enums_ utilizados nestas classes.
 
-**Table:** Projects
+**./Services/DTO**
+Classes para mapear informações da camada model e expor para visualização, para não expor diretamente o contexto.
 
-| **Nome**        | **Tipo**              |
-|-----------------|-----------------------|
-| Id              | Int                   |
-| Name            | String [REQUIRED]     |
-| Image           | String                |
-| Why             | String                |
-| What            | String                |
-| WhatWillWeDo    | String                |
-| ProjectStatus   | ProjectStatus (Enum)  |
-| Course          | Course [REQUIRED]     |
-| CourseId        | Int (FK de Course)    |
+**./Services/Interfaces**
+Interfaces dos métodos da camada de serviço.
 
-#### Relacionamentos  
-1 Course / N Project | OnDelete.Cascade
+## IMAGENS DO PROJETO
 
-#### ProjectStatus (Enum)
-0 - Em desenvolvimento  
-1 - Publicado
+![image](https://user-images.githubusercontent.com/37385246/117550040-5cf00380-b014-11eb-9983-30bbaab85a10.png)
 
-### Services
-Criar uma classe em ./Service com os acessos necessários para realizar a criação, edição, remoção e listagem da entidade 'Project' via DBContext (./Data/StreamerContext.cs)
-
-### Controller
-Criar os seguintes métodos:
-
-#### GetById
-[HttpGet]  
-Recebe um ID de um 'Project'.  
-Retorna um objeto do tipo 'Project'.
-
-#### GetByCourse
-[HttpGet]  
-Recebe um ID de um 'Course'.  
-Retorna uma lista genérica de 'Project'.
-
-#### Update
-[HttpPut]  
-Recebe um objeto do tipo 'Project' e realiza a atualização do mesmo.  
-Retorna um valor booleano.
-
-#### Delete
-[HttpDelete]  
-Recebe um ID de um 'Project' e realizar a remoção do mesmo.  
-Retorna um valor booleano.
-
-#### Create
-[HttpPost]  
-Recebe um objeto do tipo Project e realiza a inserção no banco de dados.
-Retorna o Id do 'Project' inserido.
-
-----
-
-# STREAMER-TEST FRONT-END
-
-Para nós, é importante ver como é o seu desempenho também no front-end, mas nesse caso, nós não criamos um projeto base. Pedimos apenas que crie uma aplicação Angular que consuma e realize todas as request criadas para a API. 
-
-Dessa forma conseguiremos ver toda a atmosfera da aplicação funcionando. Desde de as telas realizando as requisições, o banco de dados armazenando as informações e a API retornando a resposta para o front novamente exibir.
-
-É importante que a navegação seja clara, porém não levaremos em consideração a identidade visual e nem o design da aplicação.
+![image](https://user-images.githubusercontent.com/37385246/117550083-9f194500-b014-11eb-9d0c-f105fac769a3.png)

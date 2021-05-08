@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SS_API.Controllers
 {
     /// <summary>
-    /// 
+    /// Classes para expor os recursos para os usuários finais através de requisições Http.
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -17,7 +17,7 @@ namespace SS_API.Controllers
         private ICourseService courseService;
 
         /// <summary>
-        /// 
+        /// Construtor e injeção de dependência
         /// </summary>
         /// <param name="projectService"></param>
         /// <param name="courseService"></param>
@@ -28,7 +28,7 @@ namespace SS_API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Retorna todos os projetos
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -40,7 +40,7 @@ namespace SS_API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Busca o projeto pelo ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -56,7 +56,7 @@ namespace SS_API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Busca todos projetos pelo ID do curso
         /// </summary>
         /// <param name="courseId"></param>
         /// <returns></returns>
@@ -74,7 +74,7 @@ namespace SS_API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Atualiza o projeto
         /// </summary>
         /// <param name="projectDto"></param>
         /// <returns></returns>
@@ -92,7 +92,7 @@ namespace SS_API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Apaga o projeto
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -110,7 +110,7 @@ namespace SS_API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Cria um novo projeto
         /// </summary>
         /// <param name="projectDto"></param>
         /// <returns></returns>

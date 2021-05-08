@@ -1,6 +1,5 @@
 ﻿using SS_API.Model.Enum;
 using SS_API.Services.Dto;
-using System;
 
 namespace SS_API.Model
 {
@@ -9,11 +8,24 @@ namespace SS_API.Model
     /// </summary>
     public class Project
     {
+        /// <summary>
+        /// Construtor para uso do EF Core
+        /// </summary>
         protected Project()
         {
 
         }
 
+        /// <summary>
+        /// /// Construtor para instância de novo objeto
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="image"></param>
+        /// <param name="why"></param>
+        /// <param name="what"></param>
+        /// <param name="whatWillWeDo"></param>
+        /// <param name="projectStatus"></param>
+        /// <param name="courseId"></param>
         public Project(string name, string image, string why, string what, string whatWillWeDo, ProjectStatusEnum? projectStatus, int courseId)
         {
             Name = name;

@@ -19,5 +19,6 @@ namespace SS_API.Services
         /// <param name="id"></param>
         /// <returns></returns>
         bool CourseExists(int id);
+        CourseDto GetById(int id);
     }
 }

@@ -45,5 +45,15 @@ namespace SS_API.Services
 
             return courseList;
         }
+
+        public CourseDto GetById(int id)
+        {
+            var course = repository.Get().FirstOrDefault(x => x.Id == id);
+            if (course == null)
+            {
+                return null;
+            }
+            return new CourseDto(course);
+        }
     }
 }

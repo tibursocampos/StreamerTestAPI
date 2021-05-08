@@ -22,5 +22,16 @@ namespace SS_API.Controllers
             var courses = courseService.GetAll();
             return courses;
         }
+
+        [HttpGet("{id}")]
+        public ActionResult<CourseDto> GetById(int id)
+        {
+            var course = courseService.GetById(id);
+            if (course == null)
+            {
+                return NotFound(new { message = "Curso não encontrado !!!" });
+            }
+            return course;
+        }
     }
 }

@@ -15,16 +15,16 @@ Para iniciar a aplicação utilize `SS_API` conforme imagem abaixo.
 ### Pastas
 Conforme solicitado, a estrutura de pastas foi mantida
 
-**./Data**
+**./Data** 
 Contexto do banco de dados
 
-**./Model**
+**./Model** 
 Modelagem do banco de dados
 
-**./Services**
+**./Services** 
 Classes de serviços de acesso ao banco de dados
 
-**./SS_DB.db**
+**./SS_DB.db** 
 Sqlite DB.
 
 ### Pastas criadas
@@ -34,25 +34,31 @@ No entanto para melhor organização, e de acordo com proposto na descrição do
 
 Classes para expor os recursos para os usuários finais através de requisições Http.
 
+
 **./Repositories**
 
 Camada para acesso ao contexto, desacoplando este acesso da camada de serviço.
+
 
 **./Data/Mappings**
 
 Classes de mapeamento das entidades do dbContext.
 
+
 **./Model/Enum**
 
 Organização das classes da model e _enums_ utilizados nestas classes.
+
 
 **./Services/DTO**
 
 Classes para mapear informações da camada model e expor para visualização, para não expor diretamente o contexto.
 
+
 **./Services/Interfaces**
 
 Interfaces dos métodos da camada de serviço.
+
 
 ## IMAGENS DO PROJETO
 

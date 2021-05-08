@@ -8,14 +8,14 @@ namespace SS_API.Services
 {
 
     /// <summary>
-    /// 
+    /// Implementação dos métodos da interface ICourseService
     /// </summary>
     public class CourseService : ICourseService
     {
         private readonly ICourseRepository repository;
 
         /// <summary>
-        /// 
+        /// Construtor e injeção de dependência
         /// </summary>
         /// <param name="repository"></param>
         public CourseService(ICourseRepository repository)
@@ -23,15 +23,19 @@ namespace SS_API.Services
             this.repository = repository;
         }
 
+        /// <summary>
+        /// Verifica se curso buscado existe
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool CourseExists(int id)
         {
            return repository.Get().Any(x => x.Id == id);
         }
 
         /// <summary>
-        /// 
+        /// Retorna todos os cursos
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
         public List<CourseDto> GetAll()
         {
@@ -46,6 +50,11 @@ namespace SS_API.Services
             return courseList;
         }
 
+        /// <summary>
+        /// Busca o curso pelo ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public CourseDto GetById(int id)
         {
             var course = repository.Get().FirstOrDefault(x => x.Id == id);

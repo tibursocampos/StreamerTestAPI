@@ -86,6 +86,8 @@ namespace SS_API
             IHostingEnvironment env,
             ILoggerFactory loggerFactory)
         {
+            app.UseCors("CorsPolicy");
+
             // Ativando middlewares para uso do Swagger
             app.UseSwagger();
             var swaggerUrl = "/swagger/v1/swagger.json";
@@ -103,8 +105,6 @@ namespace SS_API
             {
                 routes.MapRoute("default", "{controller=Project}/{action=GetAll}");
             });
-
-            app.UseCors("CorsPolicy");
             
         }
     }

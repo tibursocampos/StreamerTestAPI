@@ -5,17 +5,17 @@ using SS_API.Model;
 namespace SS_API.Data.Mappings
 {
     /// <summary>
-    /// 
+    /// Mapeamento da entidade Course
     /// </summary>
     public class CourseMapping : IEntityTypeConfiguration<Course>
     {
         /// <summary>
-        /// 
+        /// Nome para tabela
         /// </summary>
         protected string TableName { get; } = nameof(Course);
 
         /// <summary>
-        /// 
+        /// Dados do mapeamento
         /// </summary>
         /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Course> builder)

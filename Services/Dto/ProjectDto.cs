@@ -4,7 +4,7 @@ using SS_API.Model.Enum;
 namespace SS_API.Services.Dto
 {
     /// <summary>
-    /// 
+    /// DTO para mapear informações da camada model
     /// </summary>
     public class ProjectDto
     {

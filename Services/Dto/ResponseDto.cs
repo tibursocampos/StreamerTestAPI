@@ -1,30 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SS_API.Services.Dto
+﻿namespace SS_API.Services.Dto
 {
     /// <summary>
-    /// 
+    /// Classe para padronizar as respostas da API
     /// </summary>
     public class ResponseDto
     {
         /// <summary>
-        /// 
+        /// Booleano para retorno verdadeiro ou falso
         /// </summary>
         public bool Success { get; set; }
+       
         /// <summary>
-        /// 
+        /// Inteiro para retorno do ID do projeto
         /// </summary>
         public int ProjectId { get; set; }
+        
         /// <summary>
-        /// 
+        /// Mensagem de erro
         /// </summary>
         public string ErrorMessage { get; set; }
 
         /// <summary>
-        /// 
+        /// Envia True e o ID do registro criado
         /// </summary>
         /// <returns></returns>
         public ResponseDto Created(int id)
@@ -35,7 +32,7 @@ namespace SS_API.Services.Dto
         }
 
         /// <summary>
-        /// 
+        /// Envia True quando executada a ação
         /// </summary>
         /// <returns></returns>
         public ResponseDto Executed()
@@ -45,10 +42,10 @@ namespace SS_API.Services.Dto
         }
 
         /// <summary>
-        /// 
+        /// Retorna Falso e a mensagem de erro
         /// </summary>
         /// <param name="validationMessage"></param>
-        /// <returns></returns>
+        /// <returns></returns>        
         public ResponseDto BadRequest(string validationMessage)
         {
             Success = false;
@@ -57,7 +54,7 @@ namespace SS_API.Services.Dto
         }
 
         /// <summary>
-        /// 
+        /// Retorna Falso e a mensagem de erro
         /// </summary>
         /// <param name="validationMessage"></param>
         /// <returns></returns>

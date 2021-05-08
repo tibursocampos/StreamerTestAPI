@@ -5,17 +5,17 @@ using SS_API.Model;
 namespace SS_API.Data.Mappings
 {
     /// <summary>
-    /// 
+    /// Mapeamento da entidade Project
     /// </summary>
     public class ProjectMapping : IEntityTypeConfiguration<Project>
     {
         /// <summary>
-        /// 
+        /// Nome para tabela
         /// </summary>
         protected string TableName { get; } = nameof(Project);
         
         /// <summary>
-        /// 
+        /// Dados do mapeamento
         /// </summary>
         /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Project> builder)

@@ -11,23 +11,23 @@ using System.Threading.Tasks;
 namespace SS_API.Services
 {
     /// <summary>
-    /// 
+    /// Implementação dos métodos da interface IProjectService
     /// </summary>
     public class ProjectService : IProjectService
     {
         private readonly IProjectRepository repository;
 
         /// <summary>
-        /// 
+        /// Construtor e injeção de dependência
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="repository"></param>
         public ProjectService(IProjectRepository repository)
         {
             this.repository = repository;
-        }     
+        }
 
         /// <summary>
-        /// 
+        /// Cria um novo projeto
         /// </summary>
         /// <param name="projectDto"></param>
         /// <returns></returns>
@@ -45,7 +45,7 @@ namespace SS_API.Services
         }
 
         /// <summary>
-        /// 
+        /// Atualiza o projeto
         /// </summary>
         /// <param name="projectDto"></param>
         /// <returns></returns>
@@ -69,7 +69,7 @@ namespace SS_API.Services
 
 
         /// <summary>
-        /// 
+        /// Exclui o projeto
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -89,7 +89,7 @@ namespace SS_API.Services
         }
 
         /// <summary>
-        /// 
+        /// Retorna todos os projetos
         /// </summary>
         /// <returns></returns>
         public List<ProjectDto> GetAll()
@@ -106,7 +106,7 @@ namespace SS_API.Services
         }
 
         /// <summary>
-        /// 
+        /// Retorna os projetos de determinado curso
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -124,7 +124,7 @@ namespace SS_API.Services
         }
 
         /// <summary>
-        /// 
+        /// Busca o projeto pelo ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -137,9 +137,9 @@ namespace SS_API.Services
             }
             return new ProjectDto(project);
         }
-       
+
         /// <summary>
-        /// 
+        /// Verifica se o projeto existe
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

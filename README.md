@@ -6,6 +6,7 @@ Este projeto foi executado utilizando a estrutura e versões de ferramentas conf
 Após baixar / clonar o repositório, execute o arquivo `SS-API.sln` para abertura do projeto.
 
 Para iniciar a aplicação utilize `SS_API` conforme imagem abaixo.
+
 ![server](https://user-images.githubusercontent.com/37385246/117552329-0806ba00-b021-11eb-8d5f-734a6334f10a.png)
 
 No Package Manager Console, ou CLI, para criar uma nova _migration_ execute o comando `add-migration _nome_da_migration` e posteriormente execute `update-database` para atualizar o banco de dados e executar as configurações da _migration_.

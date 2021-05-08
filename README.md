@@ -16,19 +16,15 @@ Para iniciar a aplicação utilize `SS_API` conforme imagem abaixo.
 Conforme solicitado, a estrutura de pastas foi mantida
 
 **./Data**
-
 Contexto do banco de dados
 
 **./Model**
-
 Modelagem do banco de dados
 
 **./Services**
-
 Classes de serviços de acesso ao banco de dados
 
 **./SS_DB.db**
-
 Sqlite DB.
 
 ### Pastas criadas

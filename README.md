@@ -12,53 +12,42 @@ Para iniciar a aplicação utilize `SS_API` conforme imagem abaixo.
 ![server](https://user-images.githubusercontent.com/37385246/117552329-0806ba00-b021-11eb-8d5f-734a6334f10a.png)
 
 ## ESTRUTURA DO PROJETO
+
 ### Pastas
 Conforme solicitado, a estrutura de pastas foi mantida
 
 **./Data** 
-Contexto do banco de dados
+- Contexto do banco de dados
 
 **./Model** 
-Modelagem do banco de dados
+- Modelagem do banco de dados
 
 **./Services** 
-Classes de serviços de acesso ao banco de dados
+- Classes de serviços de acesso ao banco de dados
 
 **./SS_DB.db** 
-Sqlite DB.
+- Sqlite DB.
 
 ### Pastas criadas
 No entanto para melhor organização, e de acordo com proposto na descrição do teste, foram criadas algumas pastas e subpastas no projeto.
 
 **./Controllers**
-
-Classes para expor os recursos para os usuários finais através de requisições Http.
-
+- Classes para expor os recursos para os usuários finais através de requisições Http.
 
 **./Repositories**
-
-Camada para acesso ao contexto, desacoplando este acesso da camada de serviço.
-
+- Camada para acesso ao contexto, desacoplando este acesso da camada de serviço.
 
 **./Data/Mappings**
-
-Classes de mapeamento das entidades do dbContext.
-
+- Classes de mapeamento das entidades do dbContext.
 
 **./Model/Enum**
-
-Organização das classes da model e _enums_ utilizados nestas classes.
-
+- Organização das classes da model e _enums_ utilizados nestas classes.
 
 **./Services/DTO**
-
-Classes para mapear informações da camada model e expor para visualização, para não expor diretamente o contexto.
-
+- Classes para mapear informações da camada model e expor para visualização, para não expor diretamente o contexto.
 
 **./Services/Interfaces**
-
-Interfaces dos métodos da camada de serviço.
-
+- Interfaces dos métodos da camada de serviço.
 
 ## IMAGENS DO PROJETO
 
